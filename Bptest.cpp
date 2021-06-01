@@ -9,38 +9,40 @@
 #include <vector>
 #include <cstring>
 #include <stdio.h>
+#include "String.h"
 using namespace std;
 int main() {
     //for (int t = 0; ; t ++) {
     //printf("Test %d\n", t) ;
     //system ("rm *.dat") ;
-    Database test ("test.txt") ;
-    //int seed = time (0) ;
-    int seed = 1611837369 ;
-    srand (seed) ;
-    char s[100010][20] ;
-    memset (s, 0, sizeof s) ;
-    int n = 1000 ;
-    for (int i = 1; i <= n; i ++) {
-        int len = 1 + rand() % 10 ;
-        for (int j = 0; j < len; j ++)
-            s[i][j] = 'a' + rand() % 26 ;
-        test.insert (data (s[i], i));
-        test.print();
-    }
 
-    for (int i = 1; i <= n; i ++) {
-        test.erase (data  (s[i], i)) ;
-        test.print();
-        if (i == n) break ;
-        int j = rand() % (n - i) + i + 1;
-        int res = test.findKey (data (s[j], j)) ;
-        if (j != res) {
-            printf("seed:%d test:(%s %d) %d\n", seed, s[j], j, res) ;
-            puts ("QAQ") ;
-            return 0 ;
-        }
-    }
+    //int seed = time (0) ;
+//    Database test ("test.txt") ;
+//    int seed = 1611837369 ;
+//    srand (seed) ;
+//    char s[100010][20] ;
+//    memset (s, 0, sizeof s) ;
+//    int n = 1000 ;
+//    for (int i = 1; i <= n; i ++) {
+//        int len = 1 + rand() % 10 ;
+//        for (int j = 0; j < len; j ++)
+//            s[i][j] = 'a' + rand() % 26 ;
+//        test.insert (data (s[i], i));
+//        test.print();
+//    }
+//
+//    for (int i = 1; i <= n; i ++) {
+//        test.erase (data  (s[i], i)) ;
+//        test.print();
+//        if (i == n) break ;
+//        int j = rand() % (n - i) + i + 1;
+//        int res = test.findKey (data (s[j], j)) ;
+//        if (j != res) {
+//            printf("seed:%d test:(%s %d) %d\n", seed, s[j], j, res) ;
+//            puts ("QAQ") ;
+//            return 0 ;
+//        }
+//    }
 //    for (int i = 1; i <= 37; ++i) {
 //        char num[3];
 //        if (i <= 26)num[0] = i + 64;
