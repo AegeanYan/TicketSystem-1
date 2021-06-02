@@ -82,6 +82,8 @@ public:
     //void erase_par(int nod);
     void erase(const data &x);
     data findmin(int nod);
+    bool empty();
+    void clear();
 };
 
 

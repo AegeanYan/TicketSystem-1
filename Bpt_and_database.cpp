@@ -500,7 +500,17 @@ void Database::erase(const data &x) {
     }
     update_root();
 };
-
+bool Database::empty() {
+    return (root == -1 || disk_read(root).keycnt == 0);
+};
+void Database::clear() {
+    root = -1;
+    nodenum = 0;
+    io.close();
+    io.open(file_name , ios::out);
+    io.close();
+    io.open(file_name , ios::in | ios::out | ios::binary);
+}
 Database::node Database::disk_read(int pos) {
     io.seekg(pos + init_offset , ios::beg);
     node cur;

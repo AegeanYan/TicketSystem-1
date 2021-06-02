@@ -76,7 +76,7 @@ namespace sjtu {
             // if these two iterators point to different vectors, throw invaild_iterator.
             int operator-(const iterator &rhs) const {
                 //TODO
-                if (this->ptr != rhs.ptr)throw invalid_iterator();
+                if (this->ptr != rhs.ptr)throw "invalid_iterator";
                 int dist = this->pos - rhs.pos;
                 return (dist >= 0) ? dist : (-dist);
             }
@@ -188,7 +188,7 @@ namespace sjtu {
             // if these two iterators point to different vectors, throw invaild_iterator.
             int operator-(const const_iterator &rhs) const {
                 //TODO
-                if (this->ptr != rhs.ptr)throw invalid_iterator();
+                if (this->ptr != rhs.ptr)throw "invalid_iterator";
                 int dist = this->pos - rhs.pos;
                 return (dist >= 0) ? dist : (-dist);
             }
@@ -263,6 +263,24 @@ namespace sjtu {
          * TODO Constructs
          * Atleast two: default constructor, copy constructor
          */
+    private:
+        void sort(int l , int r){
+            int left = l;
+            int right = r;
+            T mid = *data[(l + r) >> 1];
+            do {
+                while (*data[left] < mid)left++;
+                while (mid < *data[right])right--;
+                if (left <= right){
+                    swap(data[left] , data[right]);
+                    left++;
+                    right--;
+                }
+            } while (left <= right);
+            if (right > l)sort(l , right);
+            if (left < r)sort(left , r);
+        }
+    public:
         vector() {
             len = 20;
             cur = 0;
@@ -319,11 +337,11 @@ namespace sjtu {
          * throw index_out_of_bound if pos is not in [0, size)
          */
         T & at(const size_t &pos) {
-            if (pos < 0 || pos >= cur) throw index_out_of_bound();
+            if (pos < 0 || pos >= cur) throw "index_out_of_bound";
             else return *(data[pos]);
         }
         const T & at(const size_t &pos) const {
-            if (pos < 0 || pos >= cur) throw index_out_of_bound();
+            if (pos < 0 || pos >= cur) throw "index_out_of_bound";
             else return *(data[pos]);
         }
         /**
@@ -333,11 +351,11 @@ namespace sjtu {
          *   In STL this operator does not check the boundary but I want you to do.
          */
         T & operator[](const size_t &pos) {
-            if (pos < 0 || pos >= cur) throw index_out_of_bound();
+            if (pos < 0 || pos >= cur) throw "index_out_of_bound";
             else return *(data[pos]);
         }
         const T & operator[](const size_t &pos) const {
-            if (pos < 0 || pos >= cur) throw index_out_of_bound();
+            if (pos < 0 || pos >= cur) throw "index_out_of_bound";
             else return *(data[pos]);
         }
         /**
@@ -345,7 +363,7 @@ namespace sjtu {
          * throw container_is_empty if size == 0
          */
         const T & front() const {
-            if (this->cur == 0)throw container_is_empty();
+            if (this->cur == 0)throw "container_is_empty";
             else return *(data[0]);
         }
         /**
@@ -353,7 +371,7 @@ namespace sjtu {
          * throw container_is_empty if size == 0
          */
         const T & back() const {
-            if (this->cur == 0)throw container_is_empty();
+            if (this->cur == 0)throw "container_is_empty";
             else return *(data[cur - 1]);
         }
         /**
@@ -420,7 +438,7 @@ namespace sjtu {
          * throw index_out_of_bound if ind > size (in this situation ind can be size because after inserting the size will increase 1.)
          */
         iterator insert(const size_t &ind, const T &value) {
-            if (ind > cur) throw index_out_of_bound();
+            if (ind > cur) throw "index_out_of_bound";
             for (int i = cur; i > ind; --i) {
                 data[i] = data[i - 1];
             }
@@ -449,7 +467,7 @@ namespace sjtu {
          * throw index_out_of_bound if ind >= size
          */
         iterator erase(const size_t &ind) {
-            if (ind >= cur)throw index_out_of_bound();
+            if (ind >= cur)throw "index_out_of_bound";
             delete data[ind];
             for (int i = ind; i < cur - 1; ++i) {
                 data[i] = data[i + 1];
@@ -471,10 +489,24 @@ namespace sjtu {
          * throw container_is_empty if size() == 0
          */
         void pop_back() {
-            if (cur == 0)throw container_is_empty();
+            if (cur == 0)throw "container_is_empty";
             delete data[cur - 1];
             data[cur - 1] = nullptr;
             cur--;
+        }
+
+        //下面是reverse函数
+        void reverse(){
+            T ** tmp = data;
+            data = new T* [len];
+            for (int i = 0; i < cur; ++i) {
+                data[i] = tmp[cur - i - 1];
+            }
+        }
+
+        //下面是快排完成sort;
+        void sort(){
+            sort(0 , cur - 1);
         }
     };
 
